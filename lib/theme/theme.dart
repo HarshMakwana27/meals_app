@@ -33,7 +33,7 @@ const kDarkColorScheme = ColorScheme(
 final theme = ThemeData().copyWith(
   useMaterial3: true,
   colorScheme: kColorScheme,
-  textTheme: GoogleFonts.tekoTextTheme().copyWith(
+  textTheme: GoogleFonts.poppinsTextTheme().copyWith(
     titleMedium: TextStyle(color: kColorScheme.onBackground),
     titleLarge: TextStyle(color: kColorScheme.onBackground),
   ),
