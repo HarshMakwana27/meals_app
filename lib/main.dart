@@ -15,6 +15,6 @@ class MainApp extends StatelessWidget {
         theme: theme,
         darkTheme: darkTheme,
         home: const CategoriesScreen(),
-        themeMode: ThemeMode.dark);
+        themeMode: ThemeMode.system);
   }
 }

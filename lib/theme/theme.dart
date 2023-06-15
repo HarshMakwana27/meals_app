@@ -31,17 +31,24 @@ const kDarkColorScheme = ColorScheme(
     surface: Colors.black);
 
 final theme = ThemeData().copyWith(
-    useMaterial3: true,
-    colorScheme: kColorScheme,
-    textTheme: GoogleFonts.poppinsTextTheme(),
-    appBarTheme: AppBarTheme(
-      color: kColorScheme.background,
-    ));
+  useMaterial3: true,
+  colorScheme: kColorScheme,
+  textTheme: GoogleFonts.tekoTextTheme().copyWith(
+    titleMedium: TextStyle(color: kColorScheme.onBackground),
+    titleLarge: TextStyle(color: kColorScheme.onBackground),
+  ),
+  appBarTheme: AppBarTheme(
+    color: kColorScheme.background,
+  ),
+);
 
 final darkTheme = ThemeData().copyWith(
     useMaterial3: true,
     colorScheme: kDarkColorScheme,
-    textTheme: GoogleFonts.poppinsTextTheme(),
+    textTheme: GoogleFonts.poppinsTextTheme().copyWith(
+      titleMedium: TextStyle(color: kDarkColorScheme.onBackground),
+      titleLarge: TextStyle(color: kDarkColorScheme.onBackground),
+    ),
     appBarTheme: AppBarTheme(
       color: kDarkColorScheme.background,
     ));
