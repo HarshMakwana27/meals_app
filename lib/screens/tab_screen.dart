@@ -3,6 +3,8 @@ import 'package:meals_app/data/category.dart';
 import 'package:flutter/material.dart';
 import 'package:meals_app/model/category.dart';
 import 'package:meals_app/screens/categories_screen.dart';
+import 'package:meals_app/screens/filter_screen.dart';
+import 'package:meals_app/screens/main_drawer.dart';
 import 'package:meals_app/screens/meal_screen.dart';
 
 class TabScreen extends StatefulWidget {
@@ -16,7 +18,7 @@ class TabScreen extends StatefulWidget {
 
 class _TabScreenState extends State<TabScreen> {
   CategoryInfo favourite =
-      CategoryInfo(id: 'f', name: 'favourite', color: Colors.pink);
+      CategoryInfo(id: 'fav', name: 'favourite', color: Colors.pink);
   int selectedPageIndex = 0;
   String? activePageTitle;
   List<Meal> favoritesList = [];
@@ -47,6 +49,14 @@ class _TabScreenState extends State<TabScreen> {
           });
   }
 
+  void _screenChange(String nextScreenName) {
+    //Navigator.pop(context);
+    if (nextScreenName == 'Filters') {
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context) => const FilterScreen()));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     Widget activePage = CategoriesScreen(_toggleFavouriteMeal);
@@ -61,13 +71,14 @@ class _TabScreenState extends State<TabScreen> {
       appBar: AppBar(
         title: Text(
           activePageTitle!,
+          style: Theme.of(context).textTheme.titleLarge!,
         ),
         backgroundColor: selectedPageIndex == 0
             ? Theme.of(context).colorScheme.background
-            : favourite.color,
+            : Theme.of(context).colorScheme.primary,
       ),
       body: activePage,
-      backgroundColor: Theme.of(context).colorScheme.background,
+      drawer: MainDrawer(screenChange: _screenChange),
       bottomNavigationBar: BottomNavigationBar(
         onTap: selectPage,
         currentIndex: selectedPageIndex,
@@ -78,9 +89,11 @@ class _TabScreenState extends State<TabScreen> {
               icon: Icon(Icons.favorite), label: 'Favorites'),
         ],
         backgroundColor: Theme.of(context).colorScheme.background,
+        selectedItemColor: Theme.of(context).colorScheme.primary,
         unselectedItemColor:
             Theme.of(context).colorScheme.onBackground.withOpacity(0.5),
       ),
+      backgroundColor: Theme.of(context).colorScheme.background,
     );
   }
 }
