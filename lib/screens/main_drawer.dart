@@ -1,11 +1,30 @@
 import 'package:flutter/material.dart';
 
-class MainDrawer extends StatelessWidget {
+class MainDrawer extends StatefulWidget {
   const MainDrawer({super.key, required this.screenChange});
 
   final void Function(String nextScreenName) screenChange;
   @override
+  State<MainDrawer> createState() {
+    return _MainDrawerScreen();
+  }
+}
+
+class _MainDrawerScreen extends State<MainDrawer> {
+  bool? _isDarkMode;
+
+  @override
   Widget build(BuildContext context) {
+    var currentThemeBack = Theme.of(context).colorScheme.background;
+
+    if (currentThemeBack == Colors.black) {
+      _isDarkMode = true;
+    }
+
+    if (currentThemeBack == Colors.white) {
+      _isDarkMode = false;
+    }
+
     return Drawer(
       child: Column(
         children: [
@@ -65,7 +84,7 @@ class MainDrawer extends StatelessWidget {
                     .titleMedium!
                     .copyWith(fontSize: 18, fontWeight: FontWeight.w600)),
             onTap: () {
-              screenChange('Filters');
+              widget.screenChange('Filters');
             },
           ),
           ListTile(
@@ -85,8 +104,37 @@ class MainDrawer extends StatelessWidget {
                     .titleMedium!
                     .copyWith(fontSize: 18, fontWeight: FontWeight.w600)),
             onTap: () {
-              screenChange('Meals');
+              widget.screenChange('Meals');
             },
+          ),
+          SwitchListTile(
+            contentPadding:
+                const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+            value: _isDarkMode!,
+            onChanged: (isChecked) {
+              setState(() {
+                _isDarkMode = isChecked;
+              });
+            },
+            // materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+
+            title: Row(
+              children: [
+                Icon(
+                  Icons.brightness_6,
+                  color: Theme.of(context).colorScheme.primary,
+                  size: 30,
+                ),
+                const SizedBox(
+                  width: 25,
+                ),
+                Text('Dark Theme',
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleMedium!
+                        .copyWith(fontSize: 18, fontWeight: FontWeight.w600)),
+              ],
+            ),
           ),
           const Spacer(),
           Padding(

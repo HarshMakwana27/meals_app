@@ -5,7 +5,7 @@ import 'package:meals_app/model/category.dart';
 final List<CategoryInfo> categories = [
   CategoryInfo(
     id: 'c1',
-    name: 'Italian',
+    name: 'Every-Day Eat',
     color: Colors.purple,
   ),
   CategoryInfo(
@@ -15,7 +15,7 @@ final List<CategoryInfo> categories = [
   ),
   CategoryInfo(
     id: 'c3',
-    name: 'Hamburgers',
+    name: 'Cold-Drinks',
     color: Colors.orange,
   ),
   CategoryInfo(
@@ -40,7 +40,7 @@ final List<CategoryInfo> categories = [
   ),
   CategoryInfo(
     id: 'c8',
-    name: 'Asian',
+    name: 'Indian',
     color: Colors.lightGreen,
   ),
   CategoryInfo(

@@ -1,6 +1,5 @@
-import 'package:meals_app/data/category.dart';
-
 import 'package:flutter/material.dart';
+import 'package:meals_app/data/meals.dart';
 import 'package:meals_app/model/category.dart';
 import 'package:meals_app/screens/categories_screen.dart';
 import 'package:meals_app/screens/filter_screen.dart';
@@ -22,6 +21,13 @@ class _TabScreenState extends State<TabScreen> {
   int selectedPageIndex = 0;
   String? activePageTitle;
   List<Meal> favoritesList = [];
+
+  Map<Filters, bool> selectedFilters = {
+    Filters.lactoseFree: false,
+    Filters.glutenFree: false,
+    Filters.vegan: false,
+    Filters.vegetarian: false,
+  };
 
   void selectPage(int index) {
     setState(() {
@@ -49,17 +55,39 @@ class _TabScreenState extends State<TabScreen> {
           });
   }
 
-  void _screenChange(String nextScreenName) {
-    //Navigator.pop(context);
+  void _screenChange(String nextScreenName) async {
+    Navigator.pop(context);
     if (nextScreenName == 'Filters') {
-      Navigator.push(context,
-          MaterialPageRoute(builder: (context) => const FilterScreen()));
+      var result = await Navigator.push<Map<Filters, bool>>(
+          context,
+          MaterialPageRoute(
+              builder: (context) =>
+                  FilterScreen(currentFilters: selectedFilters)));
+
+      setState(() {
+        selectedFilters = result!;
+      });
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    Widget activePage = CategoriesScreen(_toggleFavouriteMeal);
+    final availableMeals = meals.where((meal) {
+      if (selectedFilters[Filters.glutenFree]! && !meal.isGlutenFree) {
+        return false;
+      }
+      if (selectedFilters[Filters.lactoseFree]! && !meal.isLactoseFree) {
+        return false;
+      }
+      if (selectedFilters[Filters.vegan]! && !meal.isVegan) {
+        return false;
+      }
+      if (selectedFilters[Filters.vegetarian]! && !meal.isVegetarian) {
+        return false;
+      }
+      return true;
+    }).toList();
+    Widget activePage = CategoriesScreen(_toggleFavouriteMeal, availableMeals);
     activePageTitle = 'Categories';
 
     if (selectedPageIndex == 1) {

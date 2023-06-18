@@ -55,3 +55,12 @@ final darkTheme = ThemeData().copyWith(
     appBarTheme: AppBarTheme(
       color: kDarkColorScheme.background,
     ));
+
+class ChangeTheme extends StatelessWidget {
+  const ChangeTheme({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Scaffold();
+  }
+}
