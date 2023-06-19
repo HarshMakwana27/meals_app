@@ -99,7 +99,7 @@ class _TabScreenState extends State<TabScreen> {
       appBar: AppBar(
         title: Text(
           activePageTitle!,
-          style: Theme.of(context).textTheme.titleLarge!,
+          style: Theme.of(context).textTheme.titleLarge!.copyWith(),
         ),
         backgroundColor: selectedPageIndex == 0
             ? Theme.of(context).colorScheme.background

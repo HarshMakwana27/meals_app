@@ -47,17 +47,31 @@ class _MainDrawerScreen extends State<MainDrawer> {
               children: [
                 Icon(
                   Icons.fastfood,
-                  size: 70,
+                  size: 85,
                   color: Theme.of(context).colorScheme.background,
                 ),
                 const SizedBox(
-                  width: 10,
+                  width: 20,
+                ),
+                Container(
+                  decoration: const BoxDecoration(
+                      shape: BoxShape.rectangle,
+                      border: Border(bottom: BorderSide(width: 2))),
+                  child: Text(
+                    'Hungry',
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.background,
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ),
                 Text(
-                  'Hungry Birds',
+                  'U',
                   style: TextStyle(
                     color: Theme.of(context).colorScheme.onPrimary,
-                    fontSize: 22,
+                    fontSize: 45,
+                    backgroundColor: Theme.of(context).colorScheme.primary,
                     fontWeight: FontWeight.bold,
                   ),
                 ),

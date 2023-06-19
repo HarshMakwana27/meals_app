@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:meals_app/screens/tab_screen.dart';
+import 'package:meals_app/splash_screen.dart';
 import 'package:meals_app/theme/theme.dart';
 
 void main() {
@@ -16,7 +16,7 @@ class MainApp extends StatelessWidget {
     return MaterialApp(
         theme: theme,
         darkTheme: darkTheme,
-        home: const TabScreen(),
-        themeMode: isDark ? ThemeMode.dark : ThemeMode.light);
+        home: const SplashScreen(),
+        themeMode: ThemeMode.system);
   }
 }

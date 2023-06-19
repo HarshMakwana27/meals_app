@@ -142,7 +142,7 @@ const meals = [
     id: 'm3',
     categories: [
       'c2',
-      'c3',
+      'c1',
     ],
     title: 'Classic Hamburger',
     affordability: Affordability.pricey,
