@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:meals_app/splash_screen.dart';
 import 'package:meals_app/theme/theme.dart';
 
 void main() {
-  runApp(const MainApp(true));
+  runApp(const ProviderScope(child: MainApp()));
 }
 
 class MainApp extends StatelessWidget {
-  const MainApp(this.isDark, {super.key});
-  final bool isDark;
+  const MainApp({super.key});
 
   @override
   Widget build(BuildContext context) {

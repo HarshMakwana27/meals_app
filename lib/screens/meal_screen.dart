@@ -1,17 +1,14 @@
 import 'package:flutter/material.dart';
-
 import 'package:meals_app/screens/meal_info.dart';
 
 import 'package:meals_app/widgets/meal_item.dart';
 import 'package:meals_app/model/category.dart';
 
 class MealScreen extends StatelessWidget {
-  const MealScreen(this.category, this.categorizedMeals, this.toggleFav,
-      {super.key});
+  const MealScreen(this.category, this.categorizedMeals, {super.key});
 
   final CategoryInfo category;
   final List<Meal> categorizedMeals;
-  final void Function(Meal meal) toggleFav;
 
   void _getMealInfo(BuildContext context, Meal meal) {
     Navigator.push(
@@ -19,7 +16,6 @@ class MealScreen extends StatelessWidget {
       MaterialPageRoute(
         builder: (ctx) => MealInfo(
           meal: meal,
-          toggleFav: toggleFav,
         ),
       ),
     );
