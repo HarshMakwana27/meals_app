@@ -1,32 +1,64 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:meals_app/model/category.dart';
+import 'package:meals_app/providers/favourites_provider.dart';
 
-class MealInfo extends StatelessWidget {
-  const MealInfo({super.key, required this.meal, required this.toggleFav});
+bool isFav = false;
+
+class MealInfo extends ConsumerStatefulWidget {
+  const MealInfo({super.key, required this.meal});
 
   final Meal meal;
-  final void Function(Meal meal) toggleFav;
+
+  @override
+  ConsumerState<MealInfo> createState() {
+    return _MealInfoState();
+  }
+}
+
+class _MealInfoState extends ConsumerState<MealInfo> {
   @override
   Widget build(BuildContext context) {
+    void showInfoMessage(bool isTrue) {
+      final String message;
+
+      isTrue
+          ? message = 'Item Added To Favourites'
+          : message = 'Item Removed from Favourites';
+      ScaffoldMessenger.of(context).clearSnackBars();
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(message)));
+    }
+
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBar(
-        title: Text(meal.title),
+        title: Text(widget.meal.title),
         actions: [
           IconButton(
-              onPressed: () {
-                toggleFav(meal);
-              },
-              icon: const Icon(
-                Icons.favorite,
-              )),
+            onPressed: () {
+              setState(() {});
+              isFav = ref
+                  .read(favouriteMealsProvider.notifier)
+                  .toggleFavStatus(widget.meal);
+
+              showInfoMessage(isFav);
+            },
+            icon: isFav
+                ? const Icon(
+                    Icons.favorite,
+                  )
+                : const Icon(
+                    Icons.favorite_border_outlined,
+                  ),
+          ),
         ],
       ),
       body: SingleChildScrollView(
         child: Column(
           children: [
             Image.network(
-              meal.imageUrl,
+              widget.meal.imageUrl,
             ),
             const SizedBox(
               height: 15,
@@ -43,7 +75,7 @@ class MealInfo extends StatelessWidget {
             ),
             Column(
               children: [
-                for (final ingredient in meal.ingredients)
+                for (final ingredient in widget.meal.ingredients)
                   Text(
                     ingredient,
                     style: TextStyle(
@@ -68,7 +100,7 @@ class MealInfo extends StatelessWidget {
             ),
             Column(
               children: [
-                for (final step in meal.steps)
+                for (final step in widget.meal.steps)
                   Padding(
                     padding:
                         const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
