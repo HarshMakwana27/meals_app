@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:meals_app/providers/theme_provider.dart';
 
-class MainDrawer extends StatefulWidget {
+class MainDrawer extends ConsumerStatefulWidget {
   const MainDrawer({super.key, required this.screenChange});
 
   final void Function(String nextScreenName) screenChange;
   @override
-  State<MainDrawer> createState() {
+  ConsumerState<MainDrawer> createState() {
     return _MainDrawerScreen();
   }
 }
 
-class _MainDrawerScreen extends State<MainDrawer> {
+class _MainDrawerScreen extends ConsumerState<MainDrawer> {
   bool? _isDarkMode;
 
   @override
@@ -128,6 +130,7 @@ class _MainDrawerScreen extends State<MainDrawer> {
             onChanged: (isChecked) {
               setState(() {
                 _isDarkMode = isChecked;
+                ref.read(themeProvider.notifier).isDarkMode(_isDarkMode!);
               });
             },
             // materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
