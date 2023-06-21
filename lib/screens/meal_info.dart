@@ -5,20 +5,14 @@ import 'package:meals_app/providers/favourites_provider.dart';
 
 bool isFav = false;
 
-class MealInfo extends ConsumerStatefulWidget {
+class MealInfo extends ConsumerWidget {
   const MealInfo({super.key, required this.meal});
 
   final Meal meal;
 
   @override
-  ConsumerState<MealInfo> createState() {
-    return _MealInfoState();
-  }
-}
-
-class _MealInfoState extends ConsumerState<MealInfo> {
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    ref.watch(favouriteMealsProvider);
     void showInfoMessage(bool isTrue) {
       final String message;
 
@@ -33,24 +27,29 @@ class _MealInfoState extends ConsumerState<MealInfo> {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBar(
-        title: Text(widget.meal.title),
+        title: Text(meal.title),
         actions: [
           IconButton(
             onPressed: () {
-              setState(() {});
               isFav = ref
-                  .read(favouriteMealsProvider.notifier)
-                  .toggleFavStatus(widget.meal);
+                  .watch(favouriteMealsProvider.notifier)
+                  .toggleFavStatus(meal);
 
               showInfoMessage(isFav);
             },
-            icon: isFav
-                ? const Icon(
-                    Icons.favorite,
-                  )
-                : const Icon(
-                    Icons.favorite_border_outlined,
-                  ),
+            icon: AnimatedSwitcher(
+              duration: const Duration(seconds: 1),
+              transitionBuilder: (child, animation) {
+                return FadeTransition(
+                  opacity: Tween(begin: 0.5, end: 1.0).animate(animation),
+                  child: child,
+                );
+              },
+              child: Icon(
+                isFav ? Icons.favorite : Icons.favorite_border_outlined,
+                key: ValueKey(isFav),
+              ),
+            ),
           ),
         ],
       ),
@@ -58,7 +57,7 @@ class _MealInfoState extends ConsumerState<MealInfo> {
         child: Column(
           children: [
             Image.network(
-              widget.meal.imageUrl,
+              meal.imageUrl,
             ),
             const SizedBox(
               height: 15,
@@ -75,7 +74,7 @@ class _MealInfoState extends ConsumerState<MealInfo> {
             ),
             Column(
               children: [
-                for (final ingredient in widget.meal.ingredients)
+                for (final ingredient in meal.ingredients)
                   Text(
                     ingredient,
                     style: TextStyle(
@@ -100,7 +99,7 @@ class _MealInfoState extends ConsumerState<MealInfo> {
             ),
             Column(
               children: [
-                for (final step in widget.meal.steps)
+                for (final step in meal.steps)
                   Padding(
                     padding:
                         const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
