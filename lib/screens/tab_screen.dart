@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:meals_app/data/meals.dart';
+
 import 'package:meals_app/model/category.dart';
 import 'package:meals_app/providers/favourites_provider.dart';
 import 'package:meals_app/providers/filters_provider.dart';
@@ -60,7 +60,7 @@ class _TabScreenState extends ConsumerState<TabScreen> {
         ),
         backgroundColor: selectedPageIndex == 0
             ? Theme.of(context).colorScheme.background
-            : Theme.of(context).colorScheme.primary,
+            : favourite.color,
       ),
       body: activePage,
       drawer: MainDrawer(screenChange: _screenChange),

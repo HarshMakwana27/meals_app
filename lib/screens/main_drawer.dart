@@ -56,9 +56,13 @@ class _MainDrawerScreen extends ConsumerState<MainDrawer> {
                   width: 20,
                 ),
                 Container(
-                  decoration: const BoxDecoration(
+                  decoration: BoxDecoration(
                       shape: BoxShape.rectangle,
-                      border: Border(bottom: BorderSide(width: 2))),
+                      border: Border(
+                          bottom: BorderSide(
+                              width: 2,
+                              color:
+                                  Theme.of(context).colorScheme.background))),
                   child: Text(
                     'Hungry',
                     style: TextStyle(
@@ -73,7 +77,6 @@ class _MainDrawerScreen extends ConsumerState<MainDrawer> {
                   style: TextStyle(
                     color: Theme.of(context).colorScheme.onPrimary,
                     fontSize: 45,
-                    backgroundColor: Theme.of(context).colorScheme.primary,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
